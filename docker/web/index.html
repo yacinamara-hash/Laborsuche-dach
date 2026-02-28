@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Laborsuche DACH</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster/dist/MarkerCluster.Default.css" />
+
+  <style>
+    :root { --bar: 58px; --side: 380px; --b:#ddd; --bg:#f8f8f8; --btn:#222; --btnh:#444; }
+    *{box-sizing:border-box}
+    body{margin:0;font:14px Arial,sans-serif;height:100vh;overflow:hidden}
+    .controls{height:var(--bar);display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg);border-bottom:1px solid var(--b)}
+    .group{display:flex;align-items:center;gap:8px}
+    select{padding:8px 10px;border:1px solid var(--b);border-radius:8px;background:#fff}
+    select:disabled{opacity:.6}
+    button{padding:8px 12px;border:0;border-radius:8px;background:var(--btn);color:#fff;cursor:pointer}
+    button:hover{background:var(--btnh)}
+
+    .main{height:calc(100vh - var(--bar));position:relative}
+    #map{height:100%;width:100%}
+
+    .sidebar{position:absolute;top:0;right:0;height:100%;width:var(--side);background:#fff;border-left:1px solid var(--b);
+      box-shadow:-10px 0 22px rgba(0,0,0,.08);padding:14px;overflow:auto;transform:translateX(100%);transition:transform .18s}
+    .sidebar.open{transform:translateX(0)}
+    .main.sidebar-open #map{width:calc(100% - var(--side))}
+    @media (max-width:900px){ :root{--side:92vw} .main.sidebar-open #map{width:100%} }
+
+    .sidebar-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .close-btn{background:transparent;color:#222;border:1px solid var(--b);padding:6px 10px;border-radius:8px;cursor:pointer}
+    .close-btn:hover{background:#f2f2f2}
+    .muted{color:#666;font-size:12px}
+    .chip{display:inline-block;padding:2px 8px;border-radius:999px;background:#eee;font-size:12px;margin-left:8px}
+
+    /* Marker (nur Farben) */
+    .leaflet-div-icon{background:transparent;border:none}
+    .pin{width:14px;height:14px;border-radius:999px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+    .pin-dexa{background:#2563eb}
+    .pin-blood{background:#dc2626}
+  </style>
+</head>
+
+<body>
+  <div class="controls">
+    <div class="group">
+      <label for="regionSelect">Region:</label>
+      <select id="regionSelect" disabled>
+        <option value="ALL">Alle</option>
+      </select>
+    </div>
+    <div class="group">
+      <button type="button" data-cat="ALL">Alle</button>
+      <button type="button" data-cat="DEXA">DEXA</button>
+      <button type="button" data-cat="BLOOD_LAB">Blutlabor</button>
+    </div>
+  </div>
+
+  <div class="main" id="main">
+    <div id="map"></div>
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <strong>Details</strong>
+        <button class="close-btn" type="button" id="closeSidebarBtn">Schließen</button>
+      </div>
+      <div id="details" class="muted">Klicke auf einen Marker.</div>
+    </aside>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.markercluster/dist/leaflet.markercluster.js"></script>
+
+  <script>
+    let map, cluster = null;
+    let providers = [], regions = [], regionsById = {};
+    let currentCategory = "ALL", currentRegion = "ALL";
+
+    const el = (id) => document.getElementById(id);
+
+    function openSidebar(){ el("sidebar").classList.add("open"); el("main").classList.add("sidebar-open"); setTimeout(()=>map?.invalidateSize(),200); }
+    function closeSidebar(){ el("sidebar").classList.remove("open"); el("main").classList.remove("sidebar-open"); setTimeout(()=>map?.invalidateSize(),200); }
+
+    function makeIcon(category){
+      const cls = category === "DEXA" ? "pin pin-dexa" : "pin pin-blood";
+      return L.divIcon({ className:"", html:`<div class="${cls}"></div>`, iconSize:[14,14], iconAnchor:[7,7] });
+    }
+
+    function filteredProviders(){
+      return providers.filter(p =>
+        (currentCategory === "ALL" || p.category === currentCategory) &&
+        (!regions.length || currentRegion === "ALL" || p.region_id === currentRegion)
+      );
+    }
+
+    function setupRegionSelect(){
+      const sel = el("regionSelect");
+      sel.onchange = () => setRegion(sel.value);
+      sel.disabled = !regions.length;
+      while (sel.options.length > 1) sel.remove(1);
+      regions.forEach(r => sel.add(new Option(r.name, r.id)));
+    }
+
+    function showDetails(p){
+      const regionName = regions.length ? (regionsById[p.region_id]?.name || p.region_id || "—") : "—";
+      const s = p.services || {};
+      const list = [
+        s.dexa_body_composition && "DEXA Body Composition",
+        s.dexa_bone_density && "DEXA Knochendichte",
+        s.blood_self_pay && "Bluttest Selbstzahler",
+      ].filter(Boolean);
+
+      el("details").innerHTML = `
+        <h3 style="margin:6px 0 10px">${p.name}</h3>
+        <p><strong>Kategorie:</strong> ${p.category} ${regions.length ? `<span class="chip">${regionName}</span>` : ""}</p>
+        <p><strong>Leistungen:</strong><br>${list.length ? list.join("<br>") : "—"}</p>
+        <p><strong>Adresse:</strong><br>${p.address.street}<br>${p.address.zip} ${p.address.city}</p>
+        <p><strong>Selbstzahler:</strong> ${p.self_pay}</p>
+        ${p.prices ? `
+          <p><strong>Preis:</strong> ${p.prices.type==="range"
+            ? `${p.prices.min}–${p.prices.max} ${p.prices.currency}`
+            : `ab ${p.prices.value} ${p.prices.currency}`
+          } <a href="${p.prices.source_url}" target="_blank" rel="noopener">Preisliste</a></p>
+        ` : `<p><strong>Preis:</strong> nicht öffentlich</p>`}
+        ${p.contact?.phone ? `<p><strong>Telefon:</strong> ${p.contact.phone}</p>` : ""}
+        ${p.contact?.email ? `<p><strong>E-mail:</strong> ${p.contact.email}</p>` : ""}
+        ${Array.isArray(p.sources) && p.sources.length ? `
+          <p><strong>Quellen:</strong><br>${p.sources.map(s=>`<a href="${s.url}" target="_blank" rel="noopener">${s.type}</a>`).join("<br>")}</p>
+        ` : ""}
+        <p class="muted">Letzte Verifikation: ${p.last_verified}</p>
+      `;
+    }
+
+    function renderMarkers(){
+      if (cluster) map.removeLayer(cluster);
+      cluster = L.markerClusterGroup();
+
+      const list = filteredProviders();
+      list.forEach(p => {
+        const m = L.marker([p.location.lat, p.location.lng], { icon: makeIcon(p.category) });
+        m.bindTooltip(p.name, { direction:"top", offset:[0,-10] });
+        m.on("click", () => { showDetails(p); openSidebar(); });
+        cluster.addLayer(m);
+      });
+
+      map.addLayer(cluster);
+
+      if (!list.length){
+        el("details").innerHTML = `<strong>Keine Treffer</strong><br><span class="muted">Filter anpassen.</span>`;
+        openSidebar();
+      }
+    }
+
+    function fitToResults(){
+      const list = filteredProviders();
+      if (!list.length) return;
+      map.fitBounds(L.latLngBounds(list.map(p => [p.location.lat, p.location.lng])), { padding:[30,30] });
+    }
+
+    function setCategory(cat){ currentCategory = cat; renderMarkers(); fitToResults(); }
+    function setRegion(id){
+      currentRegion = id;
+      renderMarkers();
+      if (regions.length && id !== "ALL"){
+        const r = regionsById[id];
+        if (r) map.setView([r.center.lat, r.center.lng], r.zoom || 11);
+      } else fitToResults();
+    }
+
+    // UI events
+    document.querySelectorAll("button[data-cat]").forEach(b => b.addEventListener("click", () => setCategory(b.dataset.cat)));
+    el("closeSidebarBtn").addEventListener("click", closeSidebar);
+
+    // Load data + init map
+    fetch("providers.json")
+      .then(r => r.json())
+      .then(data => {
+        providers = data.providers || [];
+        regions = data.regions || [];
+        regions.forEach(r => regionsById[r.id] = r);
+
+        const start = regions[0]
+          ? { lat: regions[0].center.lat, lng: regions[0].center.lng, zoom: regions[0].zoom || 11 }
+          : { lat: 51.0, lng: 10.0, zoom: 6 };
+
+        map = L.map("map").setView([start.lat, start.lng], start.zoom);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", { attribution:"© OpenStreetMap" }).addTo(map);
+
+        setupRegionSelect();
+        renderMarkers();
+        fitToResults();
+      })
+      .catch(err => {
+        el("details").innerHTML = `<strong>Fehler:</strong> providers.json konnte nicht geladen werden.<br><span class="muted">${String(err)}</span>`;
+        openSidebar();
+      });
+  </script>
+</body>
+</html>
