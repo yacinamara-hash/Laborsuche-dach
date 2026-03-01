@@ -1,4 +1,4 @@
-# Laborsuche DACH – MVP
+# Laborsuche DACH
 *Interaktive Karte für DEXA Body Composition & Selbstzahler‑Blutlabore*
 
 <p align="center">
@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/badge/Data-JSON-yellow" />
 </p>
 
----
+
 
 ## Unterstützte Regionen (MVP)
 
@@ -17,7 +17,7 @@
 - München & Umgebung  
 - Düsseldorf & Umgebung  
 
----
+
 
 ## Inhaltsverzeichnis
 
@@ -36,7 +36,7 @@
 - [Automatisierte Datenpipeline](#automatisierte-datenpipeline)
 - [Weiterführende-Links](#weiterführende-links)
 
----
+
 
 ## Projektziel
 
@@ -45,7 +45,7 @@ Dieses MVP bietet eine **strukturierte, filterbare und verifizierte Übersicht**
 - **DEXA Body Composition** (Ganzkörperanalyse, nicht nur Knochendichte)  
 - **Selbstzahler‑Bluttests ohne Überweisung**
 
----
+
 
 ## Scope des MVP
 
@@ -65,7 +65,7 @@ Dieses MVP bietet eine **strukturierte, filterbare und verifizierte Übersicht**
 - Backend / API  
 - Benutzerverwaltung  
 
----
+
 
 ## ⚠️ Problemstellung
 
@@ -77,11 +77,11 @@ Es existiert keine zentrale, verlässliche Übersicht für:
 Häufige Verwechslung:
 
 | Begriff | Bedeutung |
-|--------|-----------|
+|--|--|
 | **DXA Knochendichte** | Osteodensitometrie |
 | **DXA Body Composition** | Fett‑, Muskel‑ & Ganzkörperanalyse |
 
----
+
 
 ## Vorgehensweise
 
@@ -95,7 +95,7 @@ Ein Anbieter wird nur aufgenommen, wenn:
 
 Unklare oder indirekte Hinweise führen zum Ausschluss.
 
----
+
 
 ### 2. Manuelle Verifikation
 
@@ -106,7 +106,7 @@ Jeder Eintrag wird:
 - mit `last_verified` versehen  
 - mit Quelle dokumentiert
 
----
+
 
 ## Datenquellen und Validierung
 
@@ -117,7 +117,7 @@ Daten stammen ausschließlich von:
 
 Keine Drittanbieter‑Portale oder aggregierten Plattformen.
 
----
+
 
 ## Datenmodell
 
@@ -215,7 +215,7 @@ Datei: `providers.json`
             └── providers.json
 
 
----
+
 
 ## Kartenfunktion
 
@@ -235,7 +235,7 @@ Datei: `providers.json`
 - Sidebar mit Detailansicht (Kontakt, Services, Preise, Quelle, last_verified)
 - Responsive Design 
 
----
+
 ## Screenshots
 
 ### **Kartenansicht**
@@ -275,7 +275,7 @@ Dann im Browser öffnen:
 ```
 http://localhost:8000
 ```
----
+
 
 ## Automatisierte Datenpipeline
 
@@ -295,7 +295,3 @@ Beispiel:
 ## Weiterführende Links
 - scripts/ — Data Processing Scripts (siehe ➡️ [Data Processing Scripts](scripts/README.md))
 - scripts/sources/ — Modulare Scraper (siehe ➡️ [Modulare Scraper](scripts/sources/README.md))
-
-
-
----

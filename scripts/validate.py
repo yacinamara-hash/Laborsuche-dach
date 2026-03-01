@@ -32,7 +32,7 @@ def validate_provider(p: Dict[str, Any], region_ids: set) -> List[str]:
     errs: List[str] = []
     pid = p.get("id", "<missing id>")
 
-    # Required fields
+   
     for k in REQUIRED_PROVIDER_FIELDS:
         if k not in p:
             errs.append(f"{pid}: missing field '{k}'")
@@ -42,12 +42,12 @@ def validate_provider(p: Dict[str, Any], region_ids: set) -> List[str]:
     if cat not in ALLOWED_CATEGORIES:
         errs.append(f"{pid}: category must be one of {sorted(ALLOWED_CATEGORIES)} (got {cat})")
 
-    # region_id exists
+    # region_id 
     rid = p.get("region_id")
     if region_ids and rid not in region_ids:
         errs.append(f"{pid}: region_id '{rid}' not found in regions[]")
 
-    # services booleans
+    # services 
     services = p.get("services") or {}
     for key in ("dexa_body_composition", "dexa_bone_density", "blood_self_pay"):
         if key not in services:
@@ -55,13 +55,13 @@ def validate_provider(p: Dict[str, Any], region_ids: set) -> List[str]:
         elif not isinstance(services.get(key), bool):
             errs.append(f"{pid}: services.{key} must be boolean")
 
-    # address fields
+    # address
     addr = p.get("address") or {}
     for k in ("street", "zip", "city", "country"):
         if k not in addr or not str(addr.get(k, "")).strip():
             errs.append(f"{pid}: address.{k} missing/empty")
 
-    # location ranges
+    # location
     loc = p.get("location") or {}
     lat = loc.get("lat")
     lng = loc.get("lng")
@@ -82,7 +82,7 @@ def validate_provider(p: Dict[str, Any], region_ids: set) -> List[str]:
     if not isinstance(lv, str) or not is_iso_date(lv):
         errs.append(f"{pid}: last_verified must be YYYY-MM-DD (got {lv})")
 
-    # prices (optional)
+    # prices 
     prices = p.get("prices")
     if prices is not None:
         if not isinstance(prices, dict):
@@ -133,7 +133,7 @@ def main() -> None:
     providers = data.get("providers") or []
     errors: List[str] = []
 
-    # Duplicate IDs
+   
     seen = set()
     for p in providers:
         pid = p.get("id")
@@ -141,7 +141,7 @@ def main() -> None:
             errors.append(f"Duplicate provider id: {pid}")
         seen.add(pid)
 
-    # Validate each provider
+    
     for p in providers:
         if not isinstance(p, dict):
             errors.append("Provider entry is not an object")

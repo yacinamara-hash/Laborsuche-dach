@@ -68,7 +68,7 @@ def geocode_providers_file(in_path: str, out_path: str, *, sleep_s: float = 1.1)
     failed = 0
 
     for p in providers:
-        # Skip if already has usable lat/lng
+       
         loc = p.get("location") or {}
         if isinstance(loc.get("lat"), (int, float)) and isinstance(loc.get("lng"), (int, float)):
             skipped += 1

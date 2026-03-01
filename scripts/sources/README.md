@@ -1,13 +1,10 @@
 
----
-
-**`laborsuche-dach/scripts/sources/README.md`**
 
 # Sources – Modular Scraping Architecture
 
 Dieses Verzeichnis enthält modulare Scraper‑Module, die HTML‑Seiten einer bestimmten Quelle parsen und standardisierte Datensätze erzeugen.
 
----
+
 
 ## Inhaltsverzeichnis
 
@@ -19,7 +16,7 @@ Dieses Verzeichnis enthält modulare Scraper‑Module, die HTML‑Seiten einer b
 - [Testen und Validieren](#testen-und-validieren)
 - [Weiterführende Links](#weiterführende-links)
 
----
+
 
 ## Zweck
 
@@ -27,7 +24,7 @@ Dieses Verzeichnis enthält modulare Scraper‑Module, die HTML‑Seiten einer b
 - Einheitliche Ausgabeformate zur Weiterverarbeitung (`providers.json`‑kompatibel)  
 - Erleichterung von Wartung und Erweiterung
 
----
+
 
 ## Architekturprinzip
 
@@ -36,7 +33,7 @@ Dieses Verzeichnis enthält modulare Scraper‑Module, die HTML‑Seiten einer b
 - Fehler robust behandeln, keine Seiteneffekte (nur Rückgabewerte)  
 - Ausgabe muss `scripts/validate.py` passieren können
 
----
+
 
 ## Dateistruktur
 
@@ -46,7 +43,7 @@ Dieses Verzeichnis enthält modulare Scraper‑Module, die HTML‑Seiten einer b
         ├── ...
         └── README.md
 
----
+
 
 ## Interface / Beispiel
 
@@ -79,7 +76,7 @@ def extract(html: str) -> dict:
         }
     }
 ```
----
+
 ## Best Practices
 
 - Keine harten Abhängigkeiten auf externe Netzwerke in `extract`(für Testbarkeit)
@@ -94,7 +91,7 @@ def extract(html: str) -> dict:
 - Nach Extraktion: Ausgabe durch `scripts/validate.py` laufen lassen
 - Bei Änderungen an der Quelle: Scraper aktualisieren und Tests anpasse
 
----
+
 
 ### Weiterführende Links
 

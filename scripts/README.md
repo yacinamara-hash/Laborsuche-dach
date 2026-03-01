@@ -1,8 +1,4 @@
 
----
-
-**`laborsuche-dach/scripts/README.md`**
-
 # Data Processing Scripts – Laborsuche DACH
 
 Dieses Verzeichnis enthält Hilfsskripte zur:
@@ -13,7 +9,7 @@ Dieses Verzeichnis enthält Hilfsskripte zur:
 
 Diese Tools sind optional, zeigen aber eine skalierbare Architektur.
 
----
+
 
 ## Inhaltsverzeichnis
 
@@ -25,73 +21,49 @@ Diese Tools sind optional, zeigen aber eine skalierbare Architektur.
 - [Weiterführende Links](#weiterführende-links)
 
 
----
+
 
 ## Übersicht
 
 | Script | Zweck |
-|-------:|:-----|
+|-:|:--|
 | `geocode.py` | Wandelt Adresse → Lat/Lng um |
 | `validate.py` | Prüft Struktur & Pflichtfelder in `providers.json` |
 | `scrape_template.py` | Beispiel für skalierbares Scraping |
 
----
+
 
 ## Geocoding
 
 ### Zweck
 
-Konvertiert Adressen in Koordinaten:
+Adressen aus `providers.json` werden automatisch in Koordinaten (lat/lng) umgewandelt, damit sie auf der Karte angezeigt werden können.
 
-```json
-"location": {
-  "lat": 51.2277,
-  "lng": 6.7735
-}
-```
----
+### Wie es funktioniert
+Das Skript nutzt den öffentlichen Geocoding‑Dienst Photon (basierend auf OpenStreetMap‑Daten):
+- `PHOTON_URL` ist die API‑Adresse, an die die Anfrage geschickt wird.
+- `USER_AGENT` identifiziert dein Skript, damit die API die Anfrage nicht blockiert.
+Photon durchsucht die OSM‑Datenbank und liefert passende Koordinaten zurück.
 
-Nutzt eine öffentliche Geocoding-API.
-
-### Voraussetzungen
-
-Virtual Environment empfohlen:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r scripts/requirements.txt
-```
----
 ### Nutzung
 
-#### Einzeladresse testen
-
+#### Einzeladresse testen:
 ```bash
 python3 scripts/geocode.py "Nordstraße 44, 40477 Düsseldorf, DE"
 ```
-Beispielausgabe:
-```json
-{
-  "lat": 51.2351,
-  "lng": 6.7743
-}
-```
-#### Ganze Datei geocoden:
-```bash
+
+#### Komplette Datei geocoden:
+
+``` bash
 python3 scripts/geocode.py --file docker/web/providers.json --out scripts/providers.geocoded.json
 ```
-Was passiert:
-- Liest providers.json
-- Prüft alle Anbieter
-- Wenn location fehlt → wird ergänzt
-- Speichert neue Datei
-- Original bleibt unverändert
-
----
-
-### Anforderungen an Address-Felder
-
+Ablauf:
+- Datei wird geladen
+- Anbieter ohne Koordinaten werden ergänzt
+- Fehler werden dokumentiert
+- Ergebnis wird in einer neuen Datei gespeichert
+### Adressanforderungen
+Für zuverlässiges Geocoding müssen folgende Felder vorhanden sein:
 ```json
 "address": {
   "street": "Nordstraße 44",
@@ -99,15 +71,22 @@ Was passiert:
   "city": "Düsseldorf",
   "country": "DE"
 }
+Fehlt etwas, kann keine Koordinate erzeugt werden.
 ```
-Fehlt eines dieser Felder, kann keine Koordinate erzeugt werden.
+### Ergebnis
+Das Skript nimmt eine Adresse aus deiner `providers.json` und liefert Koordinaten, die später für die Karte gebraucht werden.
+Das Endergebnis sieht immer so aus:
+```json
+"location": {
+  "lat": 51.2277,
+  "lng": 6.7735
+}
 
----
-
+```
 ## Datenvalidierung
 ### Zweck
 
-Prüft die Struktur und Vollständigkeit der providers.json.
+Prüft die Struktur und Vollständigkeit der `providers.json`.
 
 Validiert unter anderem:
 
@@ -117,7 +96,7 @@ Validiert unter anderem:
 - Website vorhanden?
 - Struktur konsistent?
 
----
+
 ### Nutzung
 ```bash
 python3 scripts/validate.py providers.json
@@ -154,7 +133,7 @@ Demonstriert, wie ein skalierbares Scraping-System strukturiert werden kann.
 
 Dieses Script ist ein Architekturbeispiel, kein produktives Scraping-Tool.
 
----
+
 ### Nutzung mit Test-HTML
 ```bash 
 - python3 scripts/scrape_template.py --fixture scripts/fixtures/sample.html
@@ -171,7 +150,7 @@ Beispielausgabe:
   }
 }
 ```
----
+
 ### Skalierbarer Ansatz
 
 Empfohlene Architektur bei Erweiterung:
@@ -187,7 +166,7 @@ Empfohlene Architektur bei Erweiterung:
     └── scrape_template.py
 
 
----
+
 ### Empfohlener Workflow
 
 1. Anbieter manuell recherchieren
@@ -219,7 +198,7 @@ Stoppen
 ```bash
 docker-compose down
 ```
----
+
 
 ### Weiterführende Links
 

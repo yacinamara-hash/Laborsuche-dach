@@ -1,6 +1,3 @@
-# scripts/scrape_template.py
-
-
 from __future__ import annotations
 
 import argparse
@@ -18,7 +15,7 @@ def extract_provider_from_html(html: str) -> Dict[str, Any]:
     soup = BeautifulSoup(html, "html.parser")
     text = soup.get_text(" ", strip=True)
 
-    # Minimal heuristics (replace per-source with robust selectors)
+
     name = (soup.find("h1") or soup.title or {}).get_text(strip=True) if (soup.find("h1") or soup.title) else "Unknown"
 
     def has_any(*needles: str) -> bool:
