@@ -22,7 +22,7 @@
 ## Inhaltsverzeichnis
 
 - [Projektziel](#projektziel)
-- [Scope](#scope)
+- [Enthalten](#enthalten)
 - [Problemstellung](#problemstellung)
 - [Vorgehensweise](#vorgehensweise)
 - [Datenquellen und Validierung](#datenquellen-und-validierung)
@@ -48,9 +48,7 @@ Dieses MVP bietet eine **strukturierte, filterbare und verifizierte Übersicht**
 
 
 
-## Scope
-
-### ✔️ Enthalten
+## Enthalten
 
 - Manuell validierte Anbieter in drei Regionen  
 - Klare Kategorisierung (DEXA / BLOOD_LAB)  
@@ -58,14 +56,6 @@ Dieses MVP bietet eine **strukturierte, filterbare und verifizierte Übersicht**
 - Preisangaben inkl. Quellen (falls verfügbar)  
 - Verifikationsdatum pro Eintrag  
 - Erweiterbares JSON‑Datenmodell  
-
-### ❌ Nicht enthalten
-
-- Vollständige DACH‑Abdeckung  
-- Automatisiertes Scraping (nur Template)  
-- Backend / API  
-- Benutzerverwaltung  
-
 
 
 ## ⚠️ Problemstellung
