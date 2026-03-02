@@ -54,7 +54,7 @@ def extract(html: str) -> dict:
       - name
       - services
       - address
-      - contact (optional)
+      - contact
     """
     return {
         "name": "Beispiel Praxis",

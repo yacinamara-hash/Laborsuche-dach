@@ -11,7 +11,7 @@
 
 
 
-## Unterstützte Regionen (MVP)
+## Unterstützte Regionen 
 
 - Hannover & Umgebung  
 - München & Umgebung  
@@ -22,7 +22,7 @@
 ## Inhaltsverzeichnis
 
 - [Projektziel](#projektziel)
-- [Scope des MVP](#scope-des-mvp)
+- [Scope](#scope)
 - [Problemstellung](#problemstellung)
 - [Vorgehensweise](#vorgehensweise)
 - [Datenquellen und Validierung](#datenquellen-und-validierung)
@@ -47,7 +47,7 @@ Dieses MVP bietet eine **strukturierte, filterbare und verifizierte Übersicht**
 
 
 
-## Scope des MVP
+## Scope
 
 ### ✔️ Enthalten
 
