@@ -1,5 +1,4 @@
 
-
 # Sources – Modular Scraping Architecture
 
 Dieses Verzeichnis enthält modulare Scraper‑Module, die HTML‑Seiten einer bestimmten Quelle parsen und standardisierte Datensätze erzeugen.

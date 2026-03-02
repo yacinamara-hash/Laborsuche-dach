@@ -30,7 +30,7 @@
         "dexa_bone_density": true,
         "blood_self_pay": false
       },
-      "self_pay": false,
+      "self_pay": "Nein",
       "address": {
         "street": "Georgstrasse 16",
         "zip": "30159",
@@ -46,7 +46,7 @@
       },
       "prices": null,
       "verification_status": "verified_indirect",
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -65,7 +65,7 @@
         "dexa_bone_density": false,
         "blood_self_pay": true
       },
-      "self_pay": true,
+      "self_pay": "ja",
       "address": {
         "street": "Nordstraße 44",
         "zip": "40477",
@@ -82,7 +82,7 @@
       },
       "prices": null,
       "verification_status": "verified_explicit",
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -113,7 +113,7 @@
       },
       "prices": null,
       
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -145,7 +145,7 @@
       },
       "prices": null,
       
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website_leistung",
@@ -183,7 +183,7 @@
         "source_url": "https://www.meindirektlabor.de/ueber-uns/preisliste/"
       },
       
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -215,7 +215,7 @@
       },
       "prices": null,
       
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -247,7 +247,7 @@
       },
       "prices": null,
       
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website_leistung",
@@ -284,7 +284,7 @@
         "source_url": "https://www.meindirektlabor.de/ueber-uns/preisliste/"
       },
       
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website_standort",

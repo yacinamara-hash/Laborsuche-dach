@@ -99,7 +99,7 @@ Validiert unter anderem:
 
 ### Nutzung
 ```bash
-python3 scripts/validate.py providers.json
+python3 scripts/validate.py docker/web/providers.json
 ```
 
 Beispielausgabe bei Fehlern:
