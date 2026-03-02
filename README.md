@@ -182,14 +182,14 @@ Datei: `providers.json`
     laborsuche-dach/
     │
     ├── README.md
-    │
     │   
     ├── scripts/
     │   ├── README.md
     │   ├── geocode.py
     │   ├── validate.py
     │   ├── scrape_template.py
-    │   │
+    │   ├── providers.geocoded.json
+    │   │  
     │   ├── fixtures/
     │   │   ├── sample_radiologie.html
     │   │   └── sample.html
@@ -286,11 +286,11 @@ Das Projekt enthält optionale Scripts zur Skalierung:
 - `validate.py` → Prüfung der JSON-Struktur und Pflichtfelder
 
 Beispiel:
-
-- python scripts/geocode.py --file providers.json --out providers.geocoded.json
-- python scripts/validate.py providers.json
-- python scripts/scrape_template.py --fixture scripts/fixtures/sample.html
-
+```bash
+ - python3 scripts/geocode.py --file docker/web/providers.json --out scripts/providers.geocoded.json
+ - python3 scripts/validate.py docker/web/providers.json
+ - python3 scripts/scrape_template.py --fixture scripts/fixtures/sample.html
+```
 
 ## Weiterführende Links
 - scripts/ — Data Processing Scripts (siehe ➡️ [Data Processing Scripts](scripts/README.md))
