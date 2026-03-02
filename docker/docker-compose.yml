@@ -2,7 +2,7 @@ services:
   web:
     build: .
     ports:
-      - "5500:80"
+      - "8000:80"
     volumes:
       - ./web:/usr/share/nginx/html:ro
 

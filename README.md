@@ -34,6 +34,7 @@
 - [Diagramme](#diagramme)
 - [Projekt lokal starten](#projekt-lokal-starten)
 - [Automatisierte Datenpipeline](#automatisierte-datenpipeline)
+- [Weiterentwicklung bei mehr Zeit](#weiterentwicklung-bei-mehr-zeit)
 - [Weiterführende-Links](#weiterführende-links)
 
 
@@ -287,10 +288,34 @@ Das Projekt enthält optionale Scripts zur Skalierung:
 
 Beispiel:
 ```bash
- - python3 scripts/geocode.py --file docker/web/providers.json --out scripts/providers.geocoded.json
- - python3 scripts/validate.py docker/web/providers.json
- - python3 scripts/scrape_template.py --fixture scripts/fixtures/sample.html
+- python3 scripts/geocode.py --file docker/web/providers.json --out scripts/providers.geocoded.json
+- python3 scripts/validate.py docker/web/providers.json
+- python3 scripts/scrape_template.py --fixture scripts/fixtures/sample.html
+
 ```
+
+## Weiterentwicklung bei mehr Zeit
+
+Dieses MVP legt den Fokus bewusst auf Datenqualität, klare Abgrenzung (DEXA Body Composition vs. reine Knochendichte) und eine nachvollziehbare Verifikation.
+
+Mit mehr Zeit würde ich folgende Punkte priorisieren:
+
+- Erweiterung auf weitere Regionen im DACH-Raum  
+- Automatische JSON-Validierung und Duplikaterkennung  
+- REST API (z. B. FastAPI) + PostgreSQL/PostGIS für skalierbare Geodaten  
+- Admin-Oberfläche zur Pflege und erneuten Verifikation von Einträgen  
+- Volltextsuche und zusätzliche Filter (z. B. nur Body Composition)  
+- CI-Workflow für strukturierte Qualitätssicherung  
+
+### Tech-Stack Entscheidung
+
+Das MVP ist bewusst als Frontend-only Anwendung (HTML + Leaflet + statische JSON-Daten) umgesetzt, um:
+
+- Setup-Komplexität gering zu halten  
+- Fokus auf Datenstruktur und Verifikation zu legen  
+- eine einfache Reproduzierbarkeit zu gewährleisten  
+
+Für eine spätere Produktversion wäre ein Framework wie React oder Next.js sinnvoll, insbesondere bei wachsender UI- und State-Komplexität.
 
 ## Weiterführende Links
 - scripts/ — Data Processing Scripts (siehe ➡️ [Data Processing Scripts](scripts/README.md))

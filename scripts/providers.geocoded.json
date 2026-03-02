@@ -39,7 +39,7 @@
         "dexa_bone_density": true,
         "blood_self_pay": false
       },
-      "self_pay": false,
+      "self_pay": "Nein",
       "address": {
         "street": "Georgstrasse 16",
         "zip": "30159",
@@ -56,7 +56,7 @@
       },
       "prices": null,
       "verification_status": "verified_indirect",
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -75,7 +75,7 @@
         "dexa_bone_density": false,
         "blood_self_pay": true
       },
-      "self_pay": true,
+      "self_pay": "ja",
       "address": {
         "street": "Nordstraße 44",
         "zip": "40477",
@@ -92,7 +92,7 @@
       },
       "prices": null,
       "verification_status": "verified_explicit",
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -127,7 +127,7 @@
         "email": "info@limbachgruppe.com"
       },
       "prices": null,
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -162,7 +162,7 @@
         "email": "info@die-strahlen-therapie.de"
       },
       "prices": null,
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website_leistung",
@@ -203,7 +203,7 @@
         "currency": "EUR",
         "source_url": "https://www.meindirektlabor.de/ueber-uns/preisliste/"
       },
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -238,7 +238,7 @@
         "email": "kontakt@labor-becker.de"
       },
       "prices": null,
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website",
@@ -273,7 +273,7 @@
         "email": "info@ou-golzheim.com"
       },
       "prices": null,
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website_leistung",
@@ -314,7 +314,7 @@
         "currency": "EUR",
         "source_url": "https://www.meindirektlabor.de/ueber-uns/preisliste/"
       },
-      "last_verified": "2026-02-26",
+      "last_verified": "2026-03-02",
       "sources": [
         {
           "type": "offizielle_website_standort",
